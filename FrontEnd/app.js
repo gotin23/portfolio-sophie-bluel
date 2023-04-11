@@ -6,6 +6,8 @@ const modalContainer = document.querySelector(".modal-container");
 const butonCloseModal = document.querySelectorAll(".close-modal");
 const galleryModal = document.querySelector(".gallery-modal");
 const portfolio = document.getElementById("portfolio");
+const editProfilePic = document.querySelector(".edit-profile-pic-container");
+const editBio = document.getElementById("logo-edition-intro");
 const modalPage1 = document.querySelector(".modal-page1");
 const modalPage2 = document.querySelector(".modal-page2");
 const modalCategory = document.getElementById("modal-category");
@@ -21,6 +23,7 @@ async function getWorks() {
   try {
     const response = await fetch("http://" + window.location.hostname + ":5678/api/works");
     const data = await response.json();
+    console.log(data);
     arrayData = data;
     populateGallery(data);
     populateGalleryModal(data);
@@ -28,6 +31,8 @@ async function getWorks() {
     console.error("Une erreur s'est produite:", error);
   }
 }
+
+console.log(window.location.hostname);
 
 //  Appel a l'API pour récupérer les categories des projets
 async function getCategory() {
@@ -52,9 +57,6 @@ const deleteWorkGallery = async (id, e) => {
     },
     method: "DELETE",
   });
-  //Mise a jour dynamique
-  // gallery.textContent = "";
-  // galleryModal.innerHTML = "";
   getWorks();
 };
 
@@ -65,7 +67,7 @@ btnSendWork.addEventListener("click", async () => {
   const category = modalCategory.value;
   const image = imgUploadInput.files[0];
   const title = modalWorkTitle.value;
-  console.log(category, title.length, image.size);
+
   // Verification du form avant envois du projet sur l'api
   if (category !== "empty" && title.length > 5 && image.size < 5000000) {
     anim.classList.add("upload");
@@ -88,7 +90,7 @@ btnSendWork.addEventListener("click", async () => {
       modalCategory.value = "empty";
       imgUploadInput.value = "";
       gallery.textContent = "";
-      galleryModal.textContent = "";
+
       getWorks();
     }, 600);
 
@@ -119,32 +121,16 @@ const populateGallery = (data) => {
   });
 };
 
-// Ajout des Boutons pour filtrer les projets
-// const AddBtnCategory = (allCategory) => {
-//   allCategory.forEach((category) => {
-//     const btn = document.createElement("button");
-//     btn.className = "btn-filter";
-//     btn.innerHTML = `${category.name}`;
-//     btn.id = `${category.id}`;
-//     btnFilterContainer.appendChild(btn);
-//     const arrayBtn = [...btnFilterContainer.children];
-//     console.log(arrayBtn);
-//     btn.addEventListener("click", () => {
-//       FilteredWork(btn, arrayBtn);
-//     });
-//   });
-// };
 const addBtnCategory = (allCategory) => {
   allCategory.forEach((category) => {
-    const btn = document.createElement("button");
-    btn.className = "btn-filter";
-    btn.innerHTML = `${category.name}`;
-    btn.id = `${category.id}`;
-    btnFilterContainer.appendChild(btn);
-    const arrayBtn = [...btnFilterContainer.children];
-    arrayBtn.forEach((btn) => btn.addEventListener("click", () => FilteredWork(btn, arrayBtn)));
+    const btn = `<button class="btn-filter" id=${category.id}>${category.name}</button>`;
+    btnFilterContainer.innerHTML += btn;
   });
+  const arrayBtn = [...btnFilterContainer.children];
+  console.log(arrayBtn);
+  arrayBtn.forEach((btn) => btn.addEventListener("click", () => FilteredWork(btn, arrayBtn)));
 };
+
 // Filtrer les projets par categories
 function FilteredWork(btn, arrayBtn) {
   arrayBtn.forEach((btn) => btn.classList.remove("select"));
@@ -159,31 +145,6 @@ function FilteredWork(btn, arrayBtn) {
   }
 }
 
-// // Filtrer les projets par categorie
-
-// //All
-// const btnAllWorks = document.querySelector(".btn-filter");
-// btnAllWorks.addEventListener("click", () => {
-//   const arrayBtn = [...btnFilterContainer.children];
-//   arrayBtn.forEach((btn) => btn.classList.remove("select"));
-//   btnAllWorks.classList.add("select");
-//   gallery.textContent = "";
-//  populateGallery(arrayData);
-// });
-
-// //Filters
-// const FilteredWork = (btn) => {
-//   console.log(btn);
-//   const arrayBtn = [...btnFilterContainer.children];
-//   console.log(arrayBtn);
-//   arrayBtn.forEach((btn) => btn.classList.remove("select"));
-//   gallery.textContent = "";
-//   // btn.classList.remove("select");
-//   btn.classList.add("select");
-//   const fiteredArray = arrayData.filter((works) => works.categoryId.toString() === btn.id);
-//  populateGallery(fiteredArray);
-// };
-
 // Récupération du cookie qui contient le token
 function getCookie(key) {
   return document.cookie.split("=")[1].split(" ")[0];
@@ -192,11 +153,13 @@ let token = getCookie("token");
 
 //  affichage si connection reussis
 if (token) {
-  console.log(logInLogOut);
+  console.log(editProfilePic);
   btnFilterContainer.style = "display: none ;";
   logInLogOut.innerHTML = "logout";
   logInLogOut.href = "#";
   editionMode.style = "display: flex";
+  editBio.style = "display: flex;";
+  editProfilePic.style = "display: flex;";
   const logoContainer = document.createElement("div");
   logoContainer.className = "container-logo-edit";
   logoContainer.innerHTML = `<img class="logo-edit" src=./assets/icons/pen-to-square-regular.svg>
@@ -239,30 +202,11 @@ function populateGalleryModal(data) {
       deleteWorkGallery(work.id, e);
     });
   });
+  //Ajout du logo size
+  const btnSize = [...galleryModal.children];
+  const imgSize = `<img class="logo-size-img" src="./assets/icons/maximize-solid.svg" alt='image taille'>`;
+  btnSize[0].innerHTML += imgSize;
 }
-
-// Fermer la Modal avec le btn close
-
-// butonCloseModal.forEach((el) =>
-//   el.addEventListener("click", () => {
-//     console.log("yes");
-//     if (modalPage2.classList.contains("active")) {
-//       modalPage2.classList.remove("active");
-//       modalPage1.classList.add("active");
-//       modalContainer.style = "display: none;";
-//     } else {
-//       modalContainer.style = "display: none;";
-//     }
-//   })
-// );
-
-// logique pour fermer la modale au clique ou dehors de la modal
-// modalContainer.addEventListener("click", (e) => {
-//   if (e.target.className === "modal-container") {
-//     modalContainer.style = "display: none;";
-//     modalPage2.classList.contains("active") ? modalPage2.classList.remove("active") + modalPage1.classList.add("active") : null;
-//   }
-// });
 
 function closeModal() {
   butonCloseModal.forEach((el) =>
@@ -281,20 +225,6 @@ function closeModal() {
     }
   });
 }
-
-// // aller a la page 2 de la modal
-
-// document.getElementById("btn-new-work").addEventListener("click", () => {
-//   modalPage1.classList.remove("active");
-//   modalPage2.classList.add("active");
-// });
-
-// // revenir a la page 1 de la modal
-// const arrowBackPage1 = document.getElementById("img-arrow-back-page1");
-// arrowBackPage1.addEventListener("click", () => {
-//   modalPage1.classList.add("active");
-//   modalPage2.classList.remove("active");
-// });
 
 function changePageModal() {
   // aller a la page 2 de la modal

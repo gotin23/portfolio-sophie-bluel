@@ -500,7 +500,7 @@ line-height: 19px;
 
 .edit-profile-pic-container{
 	position: absolute;
-	display: flex;
+	display: none;
 	justify-content: center;
 	align-items: center;	
 	bottom:-30px;
@@ -524,7 +524,7 @@ line-height: 19px;
 
 #logo-edition-intro{
 	position: absolute;
-	display: flex;
+	display: none;
 	
 	align-items: center;
 	top: 10%;
@@ -629,8 +629,18 @@ line-height: 19px;
 	padding: 4px;
 	border-radius: 2px;
 	right: 4px;
-	top: 4px;
+	top: 5px;
 	width: 7px;
+	cursor: pointer;
+}
+.logo-size-img {
+	position: absolute;
+	background-color: #000000;
+	padding: 4px;
+	border-radius: 2px;
+	right: 22px;
+	top: 5px;
+	width: 8px;
 	cursor: pointer;
 }
 
@@ -869,6 +879,15 @@ line-height: 19px;
 	font-size: 12px;
 	line-height: 17px;
 	display: none;
+	color: #D65353;
+}
+#error-msg-login{
+	font-family: 'Syne';
+	margin-bottom: 10px;
+	font-weight: 700;
+	font-size: 12px;
+	line-height: 17px;
+	
 	color: #D65353;
 }
 
