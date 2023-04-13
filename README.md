@@ -20,5 +20,4 @@ npm install
 npm start
 ```
 
-### 4 Accéder au serveur
-[cliquer ici](http://localhost:9080/index.html)
+
