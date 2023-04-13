@@ -2,14 +2,15 @@
 
 
 ### 1 Cloner le repo GitHub
-`test`
-
 ```
-let x=2
+git clone https://github.com/gotin23/portfolio-sophie-bluel.git
 ```
 
-
-### 2 Ouvrir le dossier backend sur un terminal puis faire un : npm install puis un nmp start\
+### 2 Démarrer le backend 
+```
+npm install
+npm start
+```
 
 ### 3 Ouvrir le dossier FrontEnd et lancer le live server a partir de index.html\
 
