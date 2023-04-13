@@ -4,7 +4,6 @@ document.getElementById("btn-login").addEventListener("click", async (e) => {
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
 
-  console.log(email, password);
   e.preventDefault();
 
   const response = await fetch("http://" + window.location.hostname + ":5678/api/users/login", {

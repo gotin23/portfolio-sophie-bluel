@@ -18,7 +18,7 @@ const btnSendWork = document.querySelector(".modal-send-work");
 const imgUploadInput = document.querySelector(".img-upload-input");
 
 let arrayData;
-//  Appel de tous les travaux présents sur l'API
+//  Recuperation de tous les travaux présents sur l'API
 async function getWorks() {
   try {
     const response = await fetch("http://" + window.location.hostname + ":5678/api/works");
@@ -71,6 +71,7 @@ btnSendWork.addEventListener("click", async () => {
     formData.append("title", title);
     formData.append("image", image);
     formData.append("category", category);
+    console.log(title, category);
     let response = await fetch("http://" + window.location.hostname + ":5678/api/works", {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -122,6 +123,7 @@ const addBtnCategory = (allCategory) => {
     const btn = `<button class="btn-filter" id=${category.id}>${category.name}</button>`;
     btnFilterContainer.innerHTML += btn;
   });
+  //Event au click pour filtrer
   const arrayBtn = [...btnFilterContainer.children];
   arrayBtn.forEach((btn) => btn.addEventListener("click", () => FilteredWork(btn, arrayBtn)));
 };
@@ -192,7 +194,7 @@ function populateGalleryModal(data) {
       deleteWorkGallery(work.id);
     });
   });
-  //Ajout du logo size
+  //Ajout du logo resize
   const btnSize = [...galleryModal.children];
   const imgSize = `<img class="logo-size-img" src="./assets/icons/maximize-solid.svg" alt='image taille'>`;
   btnSize[0].innerHTML += imgSize;
