@@ -167,7 +167,7 @@ if (token) {
 logInLogOut.addEventListener("click", () => {
   logInLogOut.innerHTML = "login";
   document.cookie = `token=${token} path=/; max-age=${-1}`;
-  window.location.href = "http://" + window.location.hostname + ":5500/index.html";
+  window.location.href = "http://" + window.location.hostname + ":" + window.location.port + "/index.html";
 });
 
 // Ouverture de la modal
