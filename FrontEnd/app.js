@@ -23,7 +23,6 @@ async function getWorks() {
   try {
     const response = await fetch("http://" + window.location.hostname + ":5678/api/works");
     const data = await response.json();
-    console.log(data);
     arrayData = data;
     populateGallery(data);
     populateGalleryModal(data);
@@ -32,8 +31,6 @@ async function getWorks() {
   }
 }
 
-console.log(window.location.hostname);
-
 //  Appel a l'API pour récupérer les categories des projets
 async function getCategory() {
   try {
@@ -41,14 +38,13 @@ async function getCategory() {
     const category = await response.json();
     addBtnCategory(category);
     populateCategoryModal(category);
-    console.log(category);
   } catch (error) {
     console.error("Une erreur s'est produite:", error);
   }
 }
 
 // Supression d'un projet sur l'API
-const deleteWorkGallery = async (id, e) => {
+const deleteWorkGallery = async (id) => {
   const response = await fetch("http://" + window.location.hostname + `:5678/api/works/${id}`, {
     headers: {
       Accept: "*/*",
@@ -127,7 +123,6 @@ const addBtnCategory = (allCategory) => {
     btnFilterContainer.innerHTML += btn;
   });
   const arrayBtn = [...btnFilterContainer.children];
-  console.log(arrayBtn);
   arrayBtn.forEach((btn) => btn.addEventListener("click", () => FilteredWork(btn, arrayBtn)));
 };
 
@@ -137,7 +132,6 @@ function FilteredWork(btn, arrayBtn) {
   btn.classList.add("select");
 
   if (btn.id == 0) {
-    console.log(arrayData);
     populateGallery(arrayData);
   } else {
     const fiteredArray = arrayData.filter((works) => works.categoryId.toString() === btn.id);
@@ -146,14 +140,13 @@ function FilteredWork(btn, arrayBtn) {
 }
 
 // Récupération du cookie qui contient le token
-function getCookie(key) {
+function getCookie() {
   return document.cookie.split("=")[1].split(" ")[0];
 }
 let token = getCookie("token");
 
 //  affichage si connection reussis
 if (token) {
-  console.log(editProfilePic);
   btnFilterContainer.style = "display: none ;";
   logInLogOut.innerHTML = "logout";
   logInLogOut.href = "#";
@@ -165,21 +158,18 @@ if (token) {
   logoContainer.innerHTML = `<img class="logo-edit" src=./assets/icons/pen-to-square-regular.svg>
   <p>Modifier<p>`;
   portfolio.appendChild(logoContainer);
-  logoContainer.addEventListener("click", () => worksModify());
+  logoContainer.addEventListener("click", () => openModal());
 }
 
 //LogOut
 logInLogOut.addEventListener("click", () => {
   logInLogOut.innerHTML = "login";
-  console.log((document.cookie = `token=${token} path=/; max-age=${-1}`));
   document.cookie = `token=${token} path=/; max-age=${-1}`;
   window.location.href = "http://" + window.location.hostname + ":5500/index.html";
 });
 
 // Ouverture de la modal
-function worksModify() {
-  // galleryModal.innerHTML = "";
-  // populateGalleryModal();
+function openModal() {
   modalContainer.style = "display: flex;";
 }
 
@@ -198,8 +188,8 @@ function populateGalleryModal(data) {
     deleteWork.id = `${work.id}`;
     workContainer.appendChild(deleteWork);
     //Appel de function pour supprimmer un projet
-    deleteWork.addEventListener("click", (e) => {
-      deleteWorkGallery(work.id, e);
+    deleteWork.addEventListener("click", () => {
+      deleteWorkGallery(work.id);
     });
   });
   //Ajout du logo size
@@ -211,7 +201,6 @@ function populateGalleryModal(data) {
 function closeModal() {
   butonCloseModal.forEach((el) =>
     el.addEventListener("click", () => {
-      console.log("yes");
       modalPage2.classList.remove("active");
       modalPage1.classList.add("active");
       modalContainer.style = "display: none;";
@@ -245,7 +234,6 @@ function previewImgModal() {
   containerImgPreview.style = "display: block";
   const file = imgUploadInput.files[0];
   const imageUrl = URL.createObjectURL(file);
-  console.log(imageUrl.replace("blob:", ""));
   imgPreview.src = imageUrl;
 }
 // Ajouter les categories dans la modal
