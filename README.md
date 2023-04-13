@@ -1,4 +1,4 @@
-# Portfolio Sophie Bluel
+# Portfolio Sophie Bluel    
 
 
 ### 1 Cloner le repo GitHub
@@ -20,5 +20,4 @@ npm install
 npm start
 ```
 
-### 4 Accéder au serveur
-[cliquer ici](http://localhost:9080/index.html)
+
