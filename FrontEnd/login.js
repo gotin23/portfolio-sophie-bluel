@@ -22,7 +22,7 @@ document.getElementById("btn-login").addEventListener("click", async (e) => {
     errorMessage.textContent = "le mot de passe ou l'adresse email est incorrect";
   } else {
     setCookie("token", body.token, 3600);
-    window.location.href = "http://" + window.location.hostname + ":5500/index.html";
+    window.location.href = "http://" + window.location.hostname + ":" + window.location.port + "/index.html";
   }
 });
 
