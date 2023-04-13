@@ -7,11 +7,17 @@ git clone https://github.com/gotin23/portfolio-sophie-bluel.git
 ```
 
 ### 2 Démarrer le backend 
+Dans le dossier backEnd
 ```
 npm install
 npm start
 ```
 
-### 3 Ouvrir le dossier FrontEnd et lancer le live server a partir de index.html\
+### 3 Démarrer le FrontEnd 
+Dans le dossier frontEnd 
+```
+npm install
+npm start
+```
 
 ### 4 Ready to use
