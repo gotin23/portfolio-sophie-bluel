@@ -19,5 +19,8 @@ Dans le dossier frontEnd
 npm install
 npm start
 ```
-
+#### accéder au serveur
+```
+Cliquer ici [Lien](http://localhost:9080)
+```
 
